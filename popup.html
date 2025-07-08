@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Marin</title>
+  <style>
+    /* Font face and root variables */
+    @font-face {
+      font-family: "Mona Sans";
+      src: url("https://assets.codepen.io/64/Mona-Sans.woff2") format("woff2 supports variations"),
+           url("https://assets.codepen.io/64/Mona-Sans.woff2") format("woff2-variations");
+      font-weight: 100 1000;
+    }
+
+    @import url('https://fonts.googleapis.com/css?family=Poppins:900i');
+
+    :root {
+      --body-bg: hsl(0, 0%, 6%);
+      --btn-bg: hsla(320, 100%, 50%, 0.1);
+      --color-white: hsl(0, 0%, 100%);
+      --color-cyan: hsl(180, 100%, 50%);
+      --color-blue: hsl(240, 100%, 50%);
+      --color-purple: hsl(270, 100%, 50%);
+      --color-pink: hsl(330, 40%, 70%);
+      --color-red: hsl(0, 100%, 50%);
+      --color-yellow: hsl(60, 100%, 50%);
+      --color-lime: hsl(90, 100%, 75%);
+    }
+
+    /* Neon light animation keyframes */
+    @keyframes lights {
+      0% {
+        color: hsl(230, 40%, 80%);
+        text-shadow:
+          0 0 1em hsla(320, 100%, 50%, 0.2),
+          0 0 0.125em hsla(320, 100%, 60%, 0.3),
+          -1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+          1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+      }
+      30% { 
+        color: hsl(230, 80%, 90%);
+        text-shadow:
+          0 0 1em hsla(320, 100%, 50%, 0.5),
+          0 0 0.125em hsla(320, 100%, 60%, 0.5),
+          -0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+          0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+      }
+      40% { 
+        color: hsl(230, 100%, 95%);
+        text-shadow:
+          0 0 1em hsla(320, 100%, 50%, 0.5),
+          0 0 0.125em hsla(320, 100%, 90%, 0.5),
+          -0.25em -0.125em 0.125em hsla(40, 100%, 60%, 0.2),
+          0.25em 0.125em 0.125em hsla(200, 100%, 60%, 0.4);
+      }
+      70% {
+        color: hsl(230, 80%, 90%);
+        text-shadow:
+          0 0 1em hsla(320, 100%, 50%, 0.5),
+          0 0 0.125em hsla(320, 100%, 60%, 0.5),
+          0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+          -0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+      }
+      100% {
+        color: hsl(230, 40%, 80%);
+        text-shadow:
+          0 0 1em hsla(320, 100%, 50%, 0.2),
+          0 0 0.125em hsla(320, 100%, 60%, 0.3),
+          1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+          -1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+      }
+    }
+
+    /* Body styling for centered layout with space background */
+    body {
+      font-family: "Mona Sans", sans-serif;
+      background: var(--body-bg);
+      color: var(--color-white);
+      margin: 0;
+      padding: 12px;
+      width: 280px;
+      min-height: 180px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Canvas for space background */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Ensure content stays above canvas */
+    h3, textarea, button, pre {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* h3 with neon effect */
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      text-align: center;
+      animation: lights 5s 750ms linear infinite;
+      font-weight: 300;
+      width: 100%;
+    }
+
+    /* Textarea styling */
+    textarea {
+      width: 100%;
+      height: 60px;
+      background: #111;
+      color: #eee;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 8px;
+      resize: none;
+      font-size: 0.85rem;
+      box-sizing: border-box;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #999;
+    }
+
+    /* Button wrapper for centering */
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Button styling with animated effect */
+    #submitBtn {
+      display: flex;
+      align-items: center;
+      padding: 8px 20px;
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--color-white);
+      background: var(--color-purple);
+      transition: 1s;
+      box-shadow: 6px 6px 0 black;
+      transform: skewX(-15deg);
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 100%;
+      justify-content: center;
+      text-shadow:
+        0 0 1em hsla(320, 100%, 50%, 0.2),
+        0 0 0.125em hsla(320, 100%, 60%, 0.3);
+    }
+
+    #submitBtn:focus {
+      outline: none;
+    }
+
+    #submitBtn:hover {
+      transition: 0.5s;
+      box-shadow: 10px 10px 0 var(--color-yellow);
+    }
+
+    #submitBtn span:nth-child(2) {
+      transition: 0.5s;
+      margin-right: 0px;
+    }
+
+    #submitBtn:hover span:nth-child(2) {
+      transition: 0.5s;
+      margin-right: 20px;
+    }
+
+    #submitBtn span {
+      transform: skewX(15deg);
+    }
+
+    #submitBtn span:nth-child(2) {
+      width: 20px;
+      margin-left: 15px;
+      position: relative;
+      top: 12%;
+    }
+
+    /* SVG animations */
+    path.one {
+      transition: 0.4s;
+      transform: translateX(-60%);
+    }
+
+    path.two {
+      transition: 0.5s;
+      transform: translateX(-30%);
+    }
+
+    #submitBtn:hover path.three {
+      animation: color_anim 1s infinite 0.2s;
+    }
+
+    #submitBtn:hover path.one {
+      transform: translateX(0%);
+      animation: color_anim 1s infinite 0.6s;
+    }
+
+    #submitBtn:hover path.two {
+      transform: translateX(0%);
+      animation: color_anim 1s infinite 0.4s;
+    }
+
+    /* SVG color animation */
+    @keyframes color_anim {
+      0% {
+        fill: var(--color-white);
+      }
+      50% {
+        fill: var(--color-yellow);
+      }
+      100% {
+        fill: var(--color-white);
+      }
+    }
+
+    /* Pre with pink glow effect */
+    pre {
+      background: #111;
+      color: hsl(230, 40%, 80%);
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      overflow-x: auto;
+      width: 100%;
+      min-height: 40px;
+      margin: 0;
+      box-sizing: border-box;
+      text-shadow:
+        0 0 1em hsla(320, 100%, 50%, 0.2),
+        0 0 0.125em hsla(320, 100%, 60%, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="spaceCanvas"></canvas>
+  <h3>Marin</h3>
+  <textarea id="commandInput" placeholder="Type a command here"></textarea>
+  <div class="wrapper">
+    <button id="submitBtn">
+      <span>Run</span>
+      <span>
+        <svg width="20px" height="20px" viewBox="0 0 13 10">
+          <path class="one" d="M1,5 L11,5"></path>
+          <path class="two" d="M9,3 L11,5 L9,7"></path>
+          <path class="three" d="M9,3 L11,5 L9,7"></path>
+        </svg>
+      </span>
+    </button>
+  </div>
+  <pre id="responseOutput">Waiting for input...</pre>
+
+  <script src="space.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
