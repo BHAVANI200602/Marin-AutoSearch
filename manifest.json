@@ -1,13 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Marin",
-  "version": "1.0",
-  "description": "Use natural language to control the browser and automate tasks.",
+  "version": "1.4",
+  "description": "AI-powered Chrome extension for full browser automation using natural language prompts. Search, click, type, extract data, and manage tabs.",
   "permissions": [
     "scripting",
     "activeTab",
     "tabs",
-    "storage"
+    "storage",
+    "clipboardRead",
+    "clipboardWrite",
+    "downloads"
   ],
   "host_permissions": [
     "<all_urls>"
