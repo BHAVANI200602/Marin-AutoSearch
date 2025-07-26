@@ -1,4 +1,4 @@
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = "Paste your API key here ;)";
 
 const SYSTEM_PROMPT = `
 You are Marin, an AI-powered browser automation assistant. Respond ONLY with a VALID JSON array of actions. DO NOT include markdown, explanations, or comments.
