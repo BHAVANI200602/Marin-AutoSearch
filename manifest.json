@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Marin",
-  "version": "1.4",
-  "description": "AI-powered Chrome extension for full browser automation using natural language prompts. Search, click, type, extract data, and manage tabs.",
+  "version": "1.5",
+  "description": "AI-powered Chrome extension with chat interface and browser automation. Chat with AI, extract web data, and automate browser tasks using natural language.",
   "permissions": [
     "scripting",
     "activeTab",
@@ -10,19 +10,22 @@
     "storage",
     "clipboardRead",
     "clipboardWrite",
-    "downloads"
+    "downloads",
+    "sidePanel"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "action": {
-    "default_popup": "popup.html",
     "default_icon": {
       "16": "boom_icon.png",
       "32": "boom_icon.png",
       "48": "boom_icon.png",
       "128": "boom_icon.png"
     }
+  },
+  "side_panel": {
+    "default_path": "popup.html"
   },
   "background": {
     "service_worker": "background.js"

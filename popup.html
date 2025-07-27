@@ -75,18 +75,116 @@
       color: var(--color-white);
       margin: 0;
       padding: 12px;
-      width: 300px;
-      min-height: 300px;
+      width: 100%;
+      height: 100vh;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.75rem;
       border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    /* Responsive sizing */
+    @media (min-width: 600px) {
+      body {
+        min-width: 400px;
+      }
+    }
+    
+    @media (max-width: 599px) {
+      body {
+        min-width: 350px;
+      }
+    }
+    
+    /* Context-specific styles */
+    body.side-panel {
+      height: 100vh;
+      width: 100%;
+    }
+    
+    body.popup {
+      height: 600px;
+      width: 400px;
+    }
+    
+    /* Adjust chat container height based on context */
+    body.side-panel .chat-container {
+      max-height: calc(100vh - 180px);
+    }
+    
+    body.popup .chat-container {
+      max-height: 400px;
     }
 
-    h3, textarea, select, button, pre, .progress-container {
+    h3, textarea, select, button, pre, .progress-container, .chat-container, .message {
       position: relative;
+    }
+    
+    .unified-panel {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex: 1;
+      overflow: hidden;
+    }
+    
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      background: #111;
+      border-radius: 8px;
+      border: 1px solid #444;
+      box-sizing: border-box;
+    }
+    
+    .message {
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 18px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    
+    .user-message {
+      align-self: flex-end;
+      background: var(--color-blue);
+      border-bottom-right-radius: 4px;
+    }
+    
+    .ai-message {
+      align-self: flex-start;
+      background: #333;
+      border-bottom-left-radius: 4px;
+    }
+    
+    .message-time {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 4px;
+      text-align: right;
+    }
+    
+    .chat-input-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 8px;
+    }
+    
+    .button-group {
+      display: flex;
+      width: 100%;
+      gap: 8px;
     }
 
     h3 {
@@ -257,38 +355,48 @@
 </head>
 <body>
   <h3>Marin</h3>
-  <select id="modelSelect">
-    <option value="meta-llama/llama-3-70b-instruct">LLaMA 3 70B</option>
-    <option value="openchat/openchat-3.5-1210">OpenChat 3.5</option>
-    <option value="gryphe/mythomax-l2-13b">MythoMax L2 13B</option>
-    <option value="nousresearch/nous-capybara-7b">Nous Capybara 7B</option>
-  </select>
-  <textarea id="commandInput" placeholder="Type a command (e.g., Open https://chat.openai.com and type 'hello' in the chat input)"></textarea>
-  <div class="wrapper">
-    <button id="submitBtn">
-      <span>Run</span>
-      <span>
-        <svg width="20px" height="20px" viewBox="0 0 13 10">
-          <path class="one" d="M1,5 L11,5"></path>
-          <path class="two" d="M9,3 L11,5 L9,7"></path>
-          <path class="three" d="M9,3 L11,5 L9,7"></path>
-        </svg>
-      </span>
-    </button>
-    <button id="scrollBtn">
-      <span>Scroll Down</span>
-    </button>
-    <button id="clearBtn">
-      <span>Clear</span>
-    </button>
-    <button id="pinBtn" class="pin-btn">
-      <span>Pin</span>
-    </button>
+  <!-- Unified Interface -->
+  <div class="unified-panel" id="unifiedPanel">
+    <select id="modelSelect">
+      <option value="meta-llama/llama-3-70b-instruct">LLaMA 3 70B</option>
+      <option value="openchat/openchat-3.5-1210">OpenChat 3.5</option>
+      <option value="gryphe/mythomax-l2-13b">MythoMax L2 13B</option>
+      <option value="nousresearch/nous-capybara-7b">Nous Capybara 7B</option>
+    </select>
+    <div class="chat-container" id="chatContainer">
+      <div class="message ai-message">
+        Hello! I'm Marin, your AI assistant. I can help you with information, answer questions, and perform browser actions. Try asking me to search for something, open a website, or extract information from the current page.
+        <div class="message-time">Just now</div>
+      </div>
+    </div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="chat-input-container">
+      <textarea id="chatInput" placeholder="Ask a question, request information, or give a command (e.g., 'Search for AI news', 'Open Twitter', 'Extract product details from this page')..."></textarea>
+      <div class="button-group">
+        <button id="chatSubmitBtn">
+          <span>Send</span>
+          <span>
+            <svg width="20px" height="20px" viewBox="0 0 13 10">
+              <path class="one" d="M1,5 L11,5"></path>
+              <path class="two" d="M9,3 L11,5 L9,7"></path>
+              <path class="three" d="M9,3 L11,5 L9,7"></path>
+            </svg>
+          </span>
+        </button>
+        <button id="scrollBtn">
+          <span>Scroll</span>
+        </button>
+        <button id="clearBtn">
+          <span>Clear</span>
+        </button>
+        <button id="pinBtn" class="pin-btn">
+          <span>Pin</span>
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  <pre id="responseOutput">Waiting for input...</pre>
   <script src="popup.js"></script>
 </body>
 </html>
